@@ -6,11 +6,27 @@ function headers() {
 }
 
 async function api(path, options = {}) {
-  const res = await fetch(API + path, { ...options, headers: headers() });
+  const method = (options.method || (options.body ? "POST" : "GET")).toUpperCase();
+
+  const res = await fetch(API + path, {
+    ...options,
+    method,
+    headers: {
+      ...headers(),
+      ...(options.headers || {}),
+    },
+  });
+
   if (res.status === 401) {
     logout();
     throw new Error("Sesión vencida");
   }
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.error || "Error en la petición");
+  }
+
   return res.json();
 }
 
