@@ -1,0 +1,41 @@
+services:
+  backend:
+    build: ./backend
+    container_name: hogar-backend
+    restart: unless-stopped
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Configura JWT_SECRET en .env}
+      PORT: 4000
+    volumes:
+      - ./data:/app/data
+    networks:
+      - hogar-net
+
+  frontend:
+    build: ./frontend
+    container_name: hogar-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - hogar-net
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: hogar-tunnel
+    profiles: ["publico"]
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:-}
+    depends_on:
+      - frontend
+    networks:
+      - hogar-net
+
+networks:
+  hogar-net:
+    driver: bridge
+

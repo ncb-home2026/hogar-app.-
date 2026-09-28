@@ -1,0 +1,49 @@
+* { box-sizing: border-box; font-family: -apple-system, Segoe UI, Roboto, sans-serif; }
+body { margin: 0; background: #f4f5f7; color: #1f2430; }
+
+.pantalla { min-height: 100vh; }
+
+/* LOGIN */
+#login-screen { display: flex; align-items: center; justify-content: center; background: #1f2430; }
+.tarjeta-login { background: white; padding: 32px; border-radius: 12px; width: 300px; }
+.tarjeta-login h1 { font-size: 20px; margin-bottom: 16px; text-align: center; }
+.tarjeta-login input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; }
+.tarjeta-login button { width: 100%; padding: 10px; background: #2f6fed; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.link { text-align: center; color: #2f6fed; cursor: pointer; margin-top: 10px; font-size: 14px; }
+.error { color: #d64545; font-size: 13px; text-align: center; }
+
+/* NAV */
+nav { display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: white; border-bottom: 1px solid #e3e5ea; flex-wrap: wrap; }
+nav h2 { margin: 0; font-size: 18px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.tab { padding: 8px 14px; border: none; background: #eef0f4; border-radius: 20px; cursor: pointer; font-size: 13px; }
+.tab.activo { background: #2f6fed; color: white; }
+.salir { background: #d64545; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+
+main { padding: 24px; max-width: 900px; margin: 0 auto; }
+h3 { margin-top: 0; }
+
+/* FORMULARIOS */
+.form-linea { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.form-linea input, .form-linea select { padding: 8px; border: 1px solid #ddd; border-radius: 6px; flex: 1; min-width: 120px; }
+.form-linea button { padding: 8px 16px; background: #2f6fed; color: white; border: none; border-radius: 6px; cursor: pointer; }
+
+/* TABLAS */
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; font-size: 14px; }
+th { background: #f0f2f6; }
+button { cursor: pointer; }
+
+/* RESUMEN / CARDS */
+.grid-resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.card { background: white; padding: 16px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; }
+.card span { font-size: 12px; color: #666; }
+.card strong { font-size: 20px; }
+
+/* LISTA DE LA FERIA */
+.lista-checklist { list-style: none; padding: 0; background: white; border-radius: 8px; }
+.lista-checklist li { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #eee; }
+.lista-checklist li.comprado label { text-decoration: line-through; color: #999; }
+.lista-checklist button { background: none; border: none; font-size: 16px; }
+
+input[type="month"], input[type="week"] { padding: 8px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 12px; }

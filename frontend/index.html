@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gastos del Hogar</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="login-screen" class="pantalla">
+  <div class="tarjeta-login">
+    <h1>Gastos del Hogar</h1>
+    <div id="login-form">
+      <input id="login-usuario" placeholder="Usuario" />
+      <input id="login-password" type="password" placeholder="Contraseña" />
+      <button onclick="login()">Ingresar</button>
+      <p class="link" onclick="mostrarRegistro()">Crear una cuenta nueva</p>
+      <p id="login-error" class="error"></p>
+    </div>
+    <div id="registro-form" style="display:none">
+      <input id="reg-nombre" placeholder="Tu nombre" />
+      <input id="reg-usuario" placeholder="Usuario" />
+      <input id="reg-password" type="password" placeholder="Contraseña" />
+      <button onclick="registrar()">Crear cuenta</button>
+      <p class="link" onclick="mostrarLogin()">Ya tengo cuenta</p>
+      <p id="registro-error" class="error"></p>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="pantalla" style="display:none">
+  <nav>
+    <h2>🏠 Gastos del Hogar</h2>
+    <div class="tabs">
+      <button data-tab="dashboard" class="tab activo">Resumen</button>
+      <button data-tab="personas">Salarios</button>
+      <button data-tab="gastos-fijos">Gastos fijos</button>
+      <button data-tab="compras">Compras del mes</button>
+      <button data-tab="feria">Lista de la feria</button>
+      <button data-tab="ahorro">Vacaciones</button>
+    </div>
+    <button onclick="logout()" class="salir">Salir</button>
+  </nav>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section id="tab-dashboard" class="tab-content">
+      <h3>Resumen del mes</h3>
+      <div class="grid-resumen" id="resumen-cards"></div>
+    </section>
+
+    <!-- PERSONAS / SALARIOS -->
+    <section id="tab-personas" class="tab-content" style="display:none">
+      <h3>Salarios del hogar</h3>
+      <div class="form-linea">
+        <input id="p-nombre" placeholder="Nombre" />
+        <input id="p-salario" type="number" placeholder="Salario" />
+        <select id="p-frecuencia">
+          <option value="mensual">Mensual</option>
+          <option value="quincenal">Quincenal</option>
+        </select>
+        <button onclick="agregarPersona()">Agregar</button>
+      </div>
+      <table><thead><tr><th>Nombre</th><th>Salario</th><th>Frecuencia</th><th></th></tr></thead>
+      <tbody id="tabla-personas"></tbody></table>
+    </section>
+
+    <!-- GASTOS FIJOS -->
+    <section id="tab-gastos-fijos" class="tab-content" style="display:none">
+      <h3>Gastos fijos mensuales</h3>
+      <div class="form-linea">
+        <input id="g-nombre" placeholder="Nombre (ej: Renta)" />
+        <input id="g-categoria" placeholder="Categoría" />
+        <input id="g-monto" type="number" placeholder="Monto" />
+        <input id="g-dia" type="number" placeholder="Día venc." min="1" max="31" />
+        <button onclick="agregarGastoFijo()">Agregar</button>
+      </div>
+      <table><thead><tr><th>Nombre</th><th>Categoría</th><th>Monto</th><th>Vence</th><th>Estado</th><th></th></tr></thead>
+      <tbody id="tabla-gastos"></tbody></table>
+    </section>
+
+    <!-- COMPRAS PLANIFICADAS -->
+    <section id="tab-compras" class="tab-content" style="display:none">
+      <h3>Compras planificadas del mes</h3>
+      <input id="compras-mes" type="month" onchange="cargarCompras()" />
+      <div class="form-linea">
+        <input id="c-nombre" placeholder="Producto o compra" />
+        <input id="c-monto" type="number" placeholder="Monto estimado" />
+        <select id="c-prioridad">
+          <option value="alta">Alta</option>
+          <option value="media" selected>Media</option>
+          <option value="baja">Baja</option>
+        </select>
+        <button onclick="agregarCompra()">Agregar</button>
+      </div>
+      <table><thead><tr><th>Producto</th><th>Monto est.</th><th>Prioridad</th><th></th></tr></thead>
+      <tbody id="tabla-compras"></tbody></table>
+    </section>
+
+    <!-- LISTA SEMANAL / FERIA -->
+    <section id="tab-feria" class="tab-content" style="display:none">
+      <h3>Lista de la feria (semanal)</h3>
+      <input id="feria-semana" type="week" onchange="cargarFeria()" />
+      <div class="form-linea">
+        <input id="f-producto" placeholder="Producto" />
+        <input id="f-monto" type="number" placeholder="Precio estimado" />
+        <button onclick="agregarFeria()">Agregar</button>
+      </div>
+      <ul id="lista-feria" class="lista-checklist"></ul>
+      <p id="feria-totales"></p>
+    </section>
+
+    <!-- AHORRO VACACIONES -->
+    <section id="tab-ahorro" class="tab-content" style="display:none">
+      <h3>Ahorro para vacaciones (10% de los salarios)</h3>
+      <div id="ahorro-resumen" class="grid-resumen"></div>
+      <div class="form-linea">
+        <input id="a-mes" type="month" />
+        <input id="a-monto" type="number" placeholder="Monto a aportar" />
+        <input id="a-nota" placeholder="Nota (opcional)" />
+        <button onclick="agregarAporte()">Registrar aporte</button>
+      </div>
+      <div class="form-linea">
+        <input id="a-meta" type="number" placeholder="Meta de ahorro ($)" />
+        <button onclick="guardarMeta()">Guardar meta</button>
+      </div>
+      <table><thead><tr><th>Mes</th><th>Monto</th><th>Nota</th></tr></thead>
+      <tbody id="tabla-ahorro"></tbody></table>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
